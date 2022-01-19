@@ -1,48 +1,44 @@
-import React from "react";
-import {useState} from 'react';
-//Import All Component
-import {View, Text, StyleSheet,TextInput,Button,SafeAreaView,} from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import AboutScreen from './screens/AboutScreen';
 
-const App = ()=> {
-  const[inputValue,setInputValue] = useState('')
-  const checkValueIsNumberOrNot = () =>{
-    if(isNaN(inputValue)){
-      alert("It is not a Number")
-    }else{
-      alert("It is a Number")
-    }
-  }
+const App = () => {
+  const Stack = createStackNavigator();
+
   return (
-    <SafeAreaView style={{flex:1}}>
-      <View style = {styles.container}>
-        <TextInput
-        placeholder = "Enter Text"
-        style = {styles.TextInputStyle}
-        onChangeText={(inputValue) => {setInputValue(inputValue)}}
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: 'หน้าหลัก',
+          }}
         />
-        <Button
-        title = "Check value is number or not"
-        color = "#606070"
-        onPress = {checkValueIsNumberOrNot}
-        />
-      </View>
-    </SafeAreaView>
-  );
-}
 
-const styles = StyleSheet.create({
-   container: {
-   flex: 1,
-   alignItems:'center',
-   marginTop:60
-   },
-   TextInputStyle:{
-     textAlign:'center',
-     height:50,
-     width:'70%',
-     marginBottom:10,
-     borderColor:'black'
-   }
-   });
+        <Stack.Screen
+          name="About"
+          component={AboutScreen}
+          options={{
+            title: 'About',
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
